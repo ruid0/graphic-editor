@@ -1,12 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { App } from './app';
+import { BrowserRouter } from 'react-router-dom';
+import { App } from './App';
+import { GlobalStyles } from './global-styles';
 
 const root = document.getElementById('app');
 
 const render = () => {
   if (root !== null) {
-    ReactDOM.render(<App />, root);
+    ReactDOM.render(
+      <BrowserRouter>
+        <GlobalStyles />
+        <App />
+      </BrowserRouter>,
+      root
+    );
   }
 };
 
