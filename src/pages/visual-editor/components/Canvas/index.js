@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import {
   setContext,
+  setUpperCanvasContext,
   componentMounted,
   componentUnmounted,
   handledMouseMove,
@@ -10,12 +11,17 @@ import {
 
 export const Canvas = () => {
   const canvasRef = useRef();
+  const upperCanvasRef = useRef();
 
   useEffect(() => {
     const ctx = canvasRef.current.getContext('2d');
+    const upperCanvasCtx = upperCanvasRef.current.getContext('2d');
+
     componentMounted();
     setContext(ctx);
+    setUpperCanvasContext(upperCanvasCtx);
     handleResizeWindow();
+
     window.addEventListener('resize', handleResizeWindow, false);
     window.addEventListener('mousedown', handleMouseDown, false);
     window.addEventListener('mouseup', handleMouseUp, false);
@@ -42,7 +48,15 @@ export const Canvas = () => {
   const handleResizeWindow = () => {
     canvasRef.current.width = innerWidth;
     canvasRef.current.height = innerHeight - 114;
+
+    upperCanvasRef.current.width = innerWidth;
+    upperCanvasRef.current.height = innerHeight - 114;
   };
 
-  return <canvas ref={canvasRef} />;
+  return (
+    <>
+      <canvas ref={upperCanvasRef} style={{ position: 'absolute', left: 0 }} />
+      <canvas ref={canvasRef} style={{ background: '#697380' }} />
+    </>
+  );
 };
